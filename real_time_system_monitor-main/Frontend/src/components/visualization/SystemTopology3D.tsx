@@ -5,16 +5,17 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, Stars, Float, Text, PerspectiveCamera } from '@react-three/drei';
 import * as THREE from 'three';
 import { useAppContext } from '@/components/layout/AppShell';
+import type { Process } from '@/types';
 
-function ProcessNode({ process, index, total }: { process: any, index: number, total: number }) {
+function ProcessNode({ process, index, total }: { process: Process, index: number, total: number }) {
   const meshRef = useRef<THREE.Mesh>(null);
   
   // Arrange nodes in a 3D circle/helix
   const angle = (index / total) * Math.PI * 2;
-  const radius = 10 + (process.cpuUsage / 10);
+  const radius = 10 + (process.cpu / 10);
   const x = Math.cos(angle) * radius;
   const z = Math.sin(angle) * radius;
-  const y = (process.cpuUsage / 10) - 2;
+  const y = (process.cpu / 10) - 2;
 
   useFrame((state) => {
     if (meshRef.current) {
@@ -23,8 +24,8 @@ function ProcessNode({ process, index, total }: { process: any, index: number, t
     }
   });
 
-  const color = process.cpuUsage > 80 ? '#FF3B30' : process.cpuUsage > 50 ? '#FF9500' : '#34C759';
-  const size = 0.5 + (process.memUsage / 1000);
+  const color = process.cpu > 80 ? '#FF3B30' : process.cpu > 50 ? '#FF9500' : '#34C759';
+  const size = 0.5 + (process.memoryMB / 1000);
 
   return (
     <group position={[x, y, z]}>
@@ -59,13 +60,13 @@ function ProcessNode({ process, index, total }: { process: any, index: number, t
         anchorX="center"
         anchorY="middle"
       >
-        {process.cpuUsage.toFixed(1)}%
+        {process.cpu.toFixed(1)}%
       </Text>
     </group>
   );
 }
 
-function ConnectionLines({ processes }: { processes: any[] }) {
+function ConnectionLines({ processes }: { processes: Process[] }) {
   const lineGeometry = useMemo(() => {
     const points: THREE.Vector3[] = [];
     // Just draw some connections for visual effect, or use causal logic
@@ -77,8 +78,8 @@ function ConnectionLines({ processes }: { processes: any[] }) {
             const angle1 = (i / processes.length) * Math.PI * 2;
             const angle2 = ((i-1) / processes.length) * Math.PI * 2;
             
-            points.push(new THREE.Vector3(Math.cos(angle1) * 10, (p1.cpuUsage/10)-2, Math.sin(angle1) * 10));
-            points.push(new THREE.Vector3(Math.cos(angle2) * 10, (p2.cpuUsage/10)-2, Math.sin(angle2) * 10));
+            points.push(new THREE.Vector3(Math.cos(angle1) * 10, (p1.cpu/10)-2, Math.sin(angle1) * 10));
+            points.push(new THREE.Vector3(Math.cos(angle2) * 10, (p2.cpu/10)-2, Math.sin(angle2) * 10));
         }
     }
     return new THREE.BufferGeometry().setFromPoints(points);
@@ -95,7 +96,7 @@ export default function SystemTopology3D() {
   const { processes } = useAppContext();
   
   const activeProcesses = useMemo(() => 
-    processes.filter(p => p.cpuUsage > 1).slice(0, 20), 
+    processes.filter(p => p.cpu > 1).slice(0, 20), 
   [processes]);
 
   return (
