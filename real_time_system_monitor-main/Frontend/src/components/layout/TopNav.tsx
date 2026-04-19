@@ -3,7 +3,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Search, Settings, Bell, FlaskConical } from 'lucide-react';
+import { Search, Settings, Bell } from 'lucide-react';
+
 import { cn } from '@/lib/utils';
 
 const TOP_TABS = [

@@ -3,15 +3,24 @@
 import React, { useState, useMemo } from 'react';
 import { useAppContext } from '@/components/layout/AppShell';
 import GlassCard from '@/components/ui/GlassCard';
-import { FlaskConical, Search, Zap, AlertTriangle, ArrowRight, ShieldCheck, Info } from 'lucide-react';
+import { FlaskConical, Search, Zap, AlertTriangle, ArrowRight, Info } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+
+interface SimulationResult {
+  pid: number;
+  name: string;
+  freedRAM: string;
+  cascadingImpact: string;
+  riskLevel: string;
+  recommendation: string;
+}
 
 export default function SimulatorPage() {
   const { processes } = useAppContext();
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedPid, setSelectedPid] = useState<number | null>(null);
-  const [simulationResult, setSimulationResult] = useState<any>(null);
+  const [simulationResult, setSimulationResult] = useState<SimulationResult | null>(null);
   const [isSimulating, setIsSimulating] = useState(false);
+
 
   const filteredProcesses = useMemo(() => {
     if (!searchTerm) return [];
@@ -31,13 +40,14 @@ export default function SimulatorPage() {
             setSimulationResult(data);
             setIsSimulating(false);
         }, 8000);
-    } catch (e) {
+    } catch {
         setIsSimulating(false);
     }
   };
 
   return (
     <div className="max-w-[1200px] mx-auto pb-20">
+
       {/* Header */}
       <div className="mb-8">
         <div
@@ -95,9 +105,10 @@ export default function SimulatorPage() {
                 <Info size={24} className="text-primary mb-3" />
                 <h4 className="font-bold text-sm mb-2">Simulated Outcome Logic</h4>
                 <p className="text-[11px] text-on-surface-muted leading-relaxed">
-                    Our emulator uses the Causal Graph to traverse downstream edges. It calculates the theoretical "entropy reduction" and "service volatility" predicted post-kill.
+                    Our emulator uses the Causal Graph to traverse downstream edges. It calculates the theoretical &quot;entropy reduction&quot; and &quot;service volatility&quot; predicted post-kill.
                 </p>
             </GlassCard>
+
         </div>
 
         <div className="lg:col-span-2 min-h-[600px]">
@@ -197,9 +208,10 @@ export default function SimulatorPage() {
                     <div className="h-full flex flex-col items-center justify-center text-center opacity-30">
                         <FlaskConical size={80} className="mb-6" />
                         <h3 className="text-xl font-headline font-bold">Waiting for simulation target...</h3>
-                        <p className="text-sm max-w-xs mx-auto">Select a process from the search list to run a counterfactual "What-If" analysis.</p>
+                        <p className="text-sm max-w-xs mx-auto">Select a process from the search list to run a counterfactual &quot;What-If&quot; analysis.</p>
                     </div>
                 )}
+
             </AnimatePresence>
         </div>
       </div>
