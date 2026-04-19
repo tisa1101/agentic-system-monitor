@@ -3,7 +3,8 @@
 import React, { useMemo } from 'react';
 import { useAppContext } from '@/components/layout/AppShell';
 import GlassCard from '@/components/ui/GlassCard';
-import { Fingerprint, BarChart3, ShieldAlert, Info, TrendingUp, Search } from 'lucide-react';
+import { Fingerprint, BarChart3, ShieldAlert, TrendingUp, Search } from 'lucide-react';
+
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function DNAPage() {
