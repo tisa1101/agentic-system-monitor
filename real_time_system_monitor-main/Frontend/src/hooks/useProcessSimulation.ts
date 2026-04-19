@@ -39,10 +39,12 @@ export interface UseProcessSimulationReturn {
   setPriority: (pid: number, priority: number) => void;
   isRunning: boolean;
   togglePause: () => void;
+  autoOptimize: () => void;
   setRefreshRate: (ms: number) => void;
   settings: Settings;
   updateSettings: (partial: Partial<Settings>) => void;
 }
+
 
 /** Master simulation/data hook providing all process and system data */
 export function useProcessSimulation(): UseProcessSimulationReturn {
