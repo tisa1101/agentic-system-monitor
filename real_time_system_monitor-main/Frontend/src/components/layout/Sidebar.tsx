@@ -11,6 +11,7 @@ import {
   Network,
   Webhook,
   Fingerprint,
+  Box,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import type { NavItem } from '@/types';
@@ -19,6 +20,7 @@ const NAV_ITEMS: (NavItem & { IconComponent: React.ElementType })[] = [
   { id: 'dashboard', label: 'Dashboard', href: '/dashboard', icon: 'LayoutDashboard', IconComponent: LayoutDashboard },
   { id: 'causal', label: 'Causal Graph', href: '/causal', icon: 'Webhook', IconComponent: Webhook },
   { id: 'dna', label: 'DNA Analysis', href: '/dna', icon: 'Fingerprint', IconComponent: Fingerprint },
+  { id: 'topology', label: '3D Topology', href: '/topology', icon: 'Box', IconComponent: Box },
   { id: 'cpu', label: 'CPU Monitor', href: '/cpu', icon: 'Cpu', IconComponent: Cpu },
   { id: 'memory', label: 'Memory', href: '/memory', icon: 'MemoryStick', IconComponent: MemoryStick },
   { id: 'processes', label: 'Processes', href: '/processes', icon: 'List', IconComponent: List },

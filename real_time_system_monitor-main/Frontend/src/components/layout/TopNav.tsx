@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils';
 const TOP_TABS = [
   { label: 'Dashboard', href: '/dashboard' },
   { label: 'What-If Simulator', href: '/simulator' },
+  { label: '3D Topology', href: '/topology' },
   { label: 'Monitors', href: '/cpu' },
   { label: 'Reports', href: '/network' },
 ];
