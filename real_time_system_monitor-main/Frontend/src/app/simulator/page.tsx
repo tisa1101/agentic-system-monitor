@@ -31,8 +31,8 @@ export default function SimulatorPage() {
 
   const runSimulation = async (pid: number) => {
     setIsSimulating(true);
-    setSelectedPid(pid);
     try {
+
         const res = await fetch(`http://localhost:3001/api/simulate-kill/${pid}`);
         const data = await res.json();
         // Artificial delay for "computation" effect
